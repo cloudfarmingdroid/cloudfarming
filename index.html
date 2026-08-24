@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bambacoin · Mining Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- LOGIN PAGE -->
+    <div class="login-page" id="loginPage">
+        <div class="brand">
+            <i class="fas fa-gem coin-icon"></i>
+            <h1>Bambacoin <span>⛏️</span></h1>
+        </div>
+
+        <div class="tab-bar">
+            <button class="tab-btn active" id="tabRegister"><i class="fas fa-user-plus"></i> Register</button>
+            <button class="tab-btn" id="tabLogin"><i class="fas fa-sign-in-alt"></i> Login</button>
+        </div>
+
+        <div id="registerForm" class="form-container">
+            <div class="input-group">
+                <label for="regGmail"><i class="fas fa-envelope"></i> Gmail address</label>
+                <input type="email" id="regGmail" placeholder="your@gmail.com" autocomplete="off">
+            </div>
+            <div class="input-group">
+                <label for="regPassword"><i class="fas fa-lock"></i> Password</label>
+                <input type="password" id="regPassword" placeholder="••••••••" autocomplete="new-password">
+                <div style="font-size:0.7rem;color:#8899bb;margin-top:4px;padding-left:0.5rem;"><i class="fas fa-asterisk"></i> min 6 characters</div>
+            </div>
+            <div class="input-group">
+                <label for="regConfirm"><i class="fas fa-check-circle"></i> Confirm password</label>
+                <input type="password" id="regConfirm" placeholder="••••••••" autocomplete="new-password">
+            </div>
+            <div class="input-group">
+                <label for="regReferral"><i class="fas fa-user-friends"></i> Referral Code (optional)</label>
+                <input type="text" id="regReferral" placeholder="Enter referral code" autocomplete="off" style="text-transform:uppercase;">
+            </div>
+            <button class="btn-telegram" id="registerBtn"><i class="fas fa-paper-plane"></i> Register</button>
+        </div>
+
+        <div id="loginForm" class="form-container hidden">
+            <div class="input-group">
+                <label for="loginGmail"><i class="fas fa-envelope"></i> Gmail address</label>
+                <input type="email" id="loginGmail" placeholder="your@gmail.com" autocomplete="username">
+            </div>
+            <div class="input-group">
+                <label for="loginPassword"><i class="fas fa-lock"></i> Password</label>
+                <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="current-password">
+            </div>
+            <button class="btn-telegram" id="loginBtn"><i class="fas fa-sign-in-alt"></i> Login</button>
+        </div>
+
+        <div id="loginStatus" class="status-message">
+            <i class="fas fa-info-circle"></i>
+            <span id="loginStatusText">Enter credentials to continue</span>
+        </div>
+        <div class="footer-emoji"><span>🔐</span> <span>📧</span> <span>🤖</span> <span>⛏️</span></div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div class="dashboard" id="dashboard">
+        <div class="brand">
+            <i class="fas fa-gem coin-icon"></i>
+            <h1>Bambacoin <span>⛏️</span></h1>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="label"><i class="fas fa-coins"></i> Balance</div>
+                <div class="value" id="balanceDisplay">0 <small>BAM</small></div>
+                <div class="sub">≈ <span id="usdValue">0.0000</span> USDT</div>
+            </div>
+            <div class="stat-card">
+                <div class="label"><i class="fas fa-users"></i> Referrals</div>
+                <div class="value" id="referralCount">0</div>
+                <div class="sub"><i class="fas fa-arrow-up" style="color:#4cd9a0;"></i> +<span id="referralBonus">0</span> BAM</div>
+            </div>
+            <div class="stat-card">
+                <div class="label"><i class="fas fa-clock"></i> Mining Days</div>
+                <div class="value" id="miningDaysDisplay">0 / 7</div>
+                <div class="sub"><i class="fas fa-flag-checkered"></i> <span id="daysRemaining">7</span> left</div>
+            </div>
+        </div>
+
+        <div class="withdraw-status">
+            <div class="label">Withdrawal Eligibility</div>
+            <div class="amount" id="withdrawStatusText">
+                Need <span class="need" id="needAmount">10.0000</span> USDT more
+            </div>
+            <div style="font-size:0.65rem;color:#7a8aa8;margin-top:2px;">
+                <span id="eligibilityText">7 days mining OR 10 referrals required</span>
+            </div>
+        </div>
+
+        <div class="mining-circle-container">
+            <div class="mining-circle" id="miningCircle">
+                <svg viewBox="0 0 160 160">
+                    <circle class="bg-circle" cx="80" cy="80" r="70"></circle>
+                    <circle class="progress-circle" id="progressCircle" cx="80" cy="80" r="70"></circle>
+                </svg>
+                <div class="circle-content">
+                    <i class="fas fa-hard-hat"></i>
+                    <div class="timer-text" id="timerText">Mine</div>
+                    <div class="sub-text" id="subText">Click to start</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="progress-section">
+            <div class="progress-label">
+                <span><i class="fas fa-flag-checkered"></i> 7-Day Mining Progress</span>
+                <span id="progressText">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="miningProgress" style="width: 0%;"></div>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:0.6rem; color:#6a7a98; margin-top:3px;">
+                <span>⛏️ Day <span id="currentDay">0</span> of 7</span>
+                <span id="daysToMin">7 days to go</span>
+            </div>
+        </div>
+
+        <div style="display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px;">
+            <span class="badge"><i class="fas fa-tag"></i> 10 USDT min</span>
+            <span class="badge"><i class="fas fa-clock"></i> 7 days mining</span>
+            <span class="badge"><i class="fas fa-user-friends"></i> 10 referrals</span>
+            <span class="referral-reward-badge"><i class="fas fa-gift"></i> +20 000 BAM per referral</span>
+        </div>
+
+        <div class="referral-box">
+            <span class="ref-label"><i class="fas fa-link"></i> Your referral code</span>
+            <span class="ref-code" id="refCodeDisplay">BAM-XXXX</span>
+            <button class="action-btn secondary" id="copyRefBtn" style="padding:0.2rem 0.8rem; width:auto; font-size:0.7rem; margin:0;">
+                <i class="fas fa-copy"></i> Copy
+            </button>
+        </div>
+
+        <div class="referral-box" style="border-color:rgba(76,217,160,0.2);">
+            <span class="ref-label"><i class="fas fa-user-plus"></i> Enter friend's referral code</span>
+            <div class="referral-input-group">
+                <input type="text" id="referralCodeInput" placeholder="Enter referral code" style="text-transform:uppercase;">
+                <button id="submitReferralBtn"><i class="fas fa-check"></i></button>
+            </div>
+        </div>
+
+        <div class="withdraw-section">
+            <label><i class="fab fa-bitcoin"></i> USDT BEP20 Withdrawal Address</label>
+            <input type="text" id="withdrawAddress" placeholder="0x... (BEP20 address)">
+        </div>
+
+        <button class="action-btn" id="withdrawBtn"><i class="fas fa-arrow-up"></i> Withdraw</button>
+        <button class="action-btn secondary" id="logoutBtn" style="margin-top:8px;"><i class="fas fa-sign-out-alt"></i> Logout</button>
+
+        <div id="dashStatus" class="status-message info">
+            <i class="fas fa-info-circle"></i>
+            <span id="dashStatusText">Welcome to Bambacoin mining</span>
+        </div>
+
+        <div class="footer-emoji"><span>⛏️</span> <span>💰</span> <span>🤖</span> <span>✨</span></div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+          </html>
